@@ -1,0 +1,30 @@
+name: POC - Maven Build
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v6
+
+      - name: Configurar Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Validar versiones
+        run: |
+          java -version
+          mvn -version
+
+      - name: Compilar proyecto
+        run: mvn -B clean package
